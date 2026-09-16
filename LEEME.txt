@@ -1,0 +1,13 @@
+MAPA DE SOMBRAS — CIUDAD JARDÍN
+
+Abrí index.html para usar la simulación sin instalación. Abrí esta carpeta en Visual Studio Code para editarla.
+
+Las vistas Lotes y Calles usan las imágenes originales aportadas. El volumen sigue aproximadamente los dos lotes indicados y ocupa toda su superficie como supuesto. Altura: 30 metros. Faltan retiros y planta de implantación.
+
+CALIBRACIÓN
+Escala calibrada con 35 metros de frente total de ambos lotes, indicados por el usuario. Contorno trazado aproximadamente sobre capturas. La escala y orientación quedan fijas en la interfaz. Norte: norte hacia arriba según la última corrección aportada por el usuario. No es un relevamiento georreferenciado.
+
+Posición solar por ecuaciones aproximadas NOAA, para latitud -34.592113240512525 y longitud -58.5906360448885, hora argentina UTC-3. Sombra sobre terreno horizontal, sin intercepción por fachadas ni árboles. El contador estima lotes alcanzados a partir de polígonos extraídos de la captura catastral: no cuenta personas ni familias. Excluye los 2 lotes del proyecto. Si la sombra sale del mapa, el conteo es parcial. La afectación exacta requiere validar orientación, contorno y planta del edificio.
+
+MAPAS AMPLIADOS
+Lotes usa catastro-original2.png; Calles usa mapa-original2.png, en planta y 3D. La escala se recalibra sobre los mismos dos lotes y los 35 m de frente total. Los límites de parcelas se extraen de la imagen: las zonas con tramado y límites no legibles no se cuentan como lotes individuales; si la sombra las alcanza, el contador se marca parcial.
