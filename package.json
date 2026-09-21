@@ -1,0 +1,11 @@
+{
+  "name": "ciudad-jardin-mapa",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node scripts/build.cjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}
