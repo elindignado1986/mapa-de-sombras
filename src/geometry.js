@@ -1,0 +1,15 @@
+import clipping from 'polygon-clipping';
+import earcut,{flatten} from 'earcut';
+export const polygons=g=>g.type==='Polygon'?[g.coordinates]:g.coordinates;
+export const close=r=>r.length&&r[0].every((v,i)=>v===r.at(-1)[i])?r:[...r,r[0]];
+export const areaRing=r=>Math.abs(r.reduce((s,a,i)=>{const b=r[(i+1)%r.length];return s+a[0]*b[1]-b[0]*a[1]},0)/2);
+export const areaMulti=m=>m.reduce((s,p)=>s+areaRing(p[0])-p.slice(1).reduce((t,r)=>t+areaRing(r),0),0);
+export function pointInRing(p,r){let inside=false;for(let i=0,j=r.length-1;i<r.length;j=i++){const a=r[i],b=r[j],cross=(p[0]-a[0])*(b[1]-a[1])-(p[1]-a[1])*(b[0]-a[0]);if(Math.abs(cross)<1e-12&&p[0]>=Math.min(a[0],b[0])-1e-12&&p[0]<=Math.max(a[0],b[0])+1e-12&&p[1]>=Math.min(a[1],b[1])-1e-12&&p[1]<=Math.max(a[1],b[1])+1e-12)return true;if((a[1]>p[1])!==(b[1]>p[1])&&p[0]<(b[0]-a[0])*(p[1]-a[1])/(b[1]-a[1])+a[0])inside=!inside;}return inside;}
+export const contains=(g,p)=>polygons(g).some(r=>pointInRing(p,r[0])&&!r.slice(1).some(h=>pointInRing(p,h)));
+export function validRing(r){if(r.length<3||r.length>512||!r.every(p=>p.length===2&&p.every(Number.isFinite))||areaRing(r)<1e-12)return false;const orient=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);const on=(a,b,p)=>Math.abs(orient(a,b,p))<1e-14&&p[0]>=Math.min(a[0],b[0])&&p[0]<=Math.max(a[0],b[0])&&p[1]>=Math.min(a[1],b[1])&&p[1]<=Math.max(a[1],b[1]);for(let i=0;i<r.length;i++){const a=r[i],b=r[(i+1)%r.length];if(a[0]===b[0]&&a[1]===b[1])return false;for(let j=i+1;j<r.length;j++){if(j===i+1||(i===0&&j===r.length-1))continue;const c=r[j],d=r[(j+1)%r.length];if((orient(a,b,c)*orient(a,b,d)<0&&orient(c,d,a)*orient(c,d,b)<0)||on(a,b,c)||on(a,b,d)||on(c,d,a)||on(c,d,b))return false;}}return true;}
+export function footprintWithin(g,r){return validRing(r)&&areaMulti(clipping.difference([[close(r)]],polygons(g)))<1e-14;}
+export const bounds=g=>{const p=polygons(g).flat(2);return p.reduce((b,p)=>[Math.min(b[0],p[0]),Math.min(b[1],p[1]),Math.max(b[2],p[0]),Math.max(b[3],p[1])],[Infinity,Infinity,-Infinity,-Infinity])};
+export const center=g=>{const b=bounds(g);return [(b[0]+b[2])/2,(b[1]+b[3])/2]};
+export const localProjection=origin=>({forward:p=>[(p[0]-origin[0])*111320*Math.cos(origin[1]*Math.PI/180),(p[1]-origin[1])*111132],inverse:p=>[origin[0]+p[0]/(111320*Math.cos(origin[1]*Math.PI/180)),origin[1]+p[1]/111132]});
+export function shadow(g,height,sun){if(sun.up<=0)return [];const dx=-height*sun.east/sun.up,dy=-height*sun.north/sun.up,parts=[];if(Math.abs(dx)+Math.abs(dy)<1e-10)return polygons(g);for(const poly of polygons(g)){const data=flatten(poly),ids=earcut(data.vertices,data.holes,2);for(let i=0;i<ids.length;i+=3){const tri=ids.slice(i,i+3).map(j=>data.vertices.slice(j*2,j*2+2));parts.push([close(tri)],[close(tri.map(p=>[p[0]+dx,p[1]+dy]))]);for(let j=0;j<3;j++){const a=tri[j],b=tri[(j+1)%3];parts.push([close([a,b,[b[0]+dx,b[1]+dy],[a[0]+dx,a[1]+dy]])]);}}}return parts.length?clipping.union(...parts):[];}
+export const overlaps=(a,b)=>b.length&&areaMulti(clipping.intersection(polygons(a),b))>1e-6;

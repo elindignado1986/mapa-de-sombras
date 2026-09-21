@@ -5,14 +5,22 @@ const esbuild=require('esbuild');
 
 async function build(){
   const root=path.resolve(__dirname,'..');
+  const manifestPath=path.join(root,'data/amba/municipality-manifest.json');
+  if(process.env.VERCEL&&fs.existsSync(manifestPath)){
+    const manifest=JSON.parse(fs.readFileSync(manifestPath,'utf8'));
+    if(Object.values(manifest).some(m=>m.available&&m.redistribution!=='approved')&&process.env.ARBA_REDISTRIBUTION_REVIEWED!=='1')throw Error('Antes del deploy: revisar y documentar las condiciones ARBA. Luego configurar ARBA_REDISTRIBUTION_REVIEWED=1.');
+  }
   const output=path.join(root,'publicar');
   const read=name=>fs.readFileSync(path.join(root,name),'utf8');
+  const urban=await esbuild.build({entryPoints:[path.join(root,'src/main.js')],bundle:true,write:false,minify:true,format:'iife',target:'es2022'});
+  fs.writeFileSync(path.join(root,'urban.bundle.js'),urban.outputFiles[0].contents);
   const hash=text=>crypto.createHash('sha256').update(text).digest('hex').slice(0,12);
   const scripts=['parcels.js','parcel-geometry.js','sound.js','sound-view.js','app.js'];
   let html=read('index.html');
+  html=html.replace('<script src="urban.bundle.js"></script>','');
   const tags=[...html.matchAll(/<script\s+src="([^"]+)"\s*>\s*<\/script>/g)];
   if(JSON.stringify(tags.map(m=>m[1]))!==JSON.stringify(scripts))throw Error('Cambió la lista de scripts: revisar el orden antes de publicar.');
-  const source=scripts.map(name=>read(name)).join('\n;\n');
+  const source=scripts.map(name=>read(name)).join('\n;\n')+'\n;\n'+Buffer.from(urban.outputFiles[0].contents).toString();
   const [js,css]=await Promise.all([
     esbuild.transform(source,{loader:'js',format:'iife',minify:true,sourcemap:false,target:'es2020',charset:'utf8',legalComments:'inline'}),
     esbuild.transform(read('style.css'),{loader:'css',minify:true,sourcemap:false,charset:'utf8',legalComments:'inline'})
@@ -27,9 +35,15 @@ async function build(){
   if(fs.existsSync(output)&&fs.lstatSync(output).isSymbolicLink())throw Error('La carpeta publicar no puede ser un enlace.');
   fs.mkdirSync(output,{recursive:true});
   const allowed=name=>['index.html','.nojekyll',...assets].includes(name)||/^(app|style)\.[a-f0-9]{12}\.min\.(js|css)$/.test(name);
-  for(const entry of fs.readdirSync(output,{withFileTypes:true}))if(!entry.isFile()||!allowed(entry.name))throw Error('Archivo ajeno a la publicación: '+entry.name+'. Movelo fuera de publicar antes de reconstruir.');
+  for(const entry of fs.readdirSync(output,{withFileTypes:true}))if(entry.name!=='data'&&(!entry.isFile()||!allowed(entry.name)))throw Error('Archivo ajeno a la publicación: '+entry.name+'. Movelo fuera de publicar antes de reconstruir.');
   for(const [name,data]of files)fs.writeFileSync(path.join(output,name),data);
-  for(const name of fs.readdirSync(output))if(!files.has(name))fs.unlinkSync(path.join(output,name));
+  for(const name of fs.readdirSync(output))if(name!=='data'&&!files.has(name))fs.unlinkSync(path.join(output,name));
+  if(fs.existsSync(path.join(root,'data')))fs.cpSync(path.join(root,'data'),path.join(output,'data'),{recursive:true});
+  if(fs.existsSync(manifestPath)){
+    const manifest=JSON.parse(fs.readFileSync(manifestPath,'utf8'));
+    for(const [id,m]of Object.entries(manifest))if(m.available&&!fs.existsSync(path.join(root,'data/amba',id,m.version))){m.available=false;m.status='en-preparacion';}
+    fs.writeFileSync(path.join(output,'data/amba/municipality-manifest.json'),JSON.stringify(manifest,null,2));
+  }
   const before=Buffer.byteLength(source)+Buffer.byteLength(read('style.css')),after=Buffer.byteLength(js.code)+Buffer.byteLength(css.code);
   console.log(`Versión lista: ${output}\nJavaScript + CSS: ${before.toLocaleString('es-AR')} → ${after.toLocaleString('es-AR')} bytes (${Math.round((1-after/before)*100)}% menos).\nSin mapas de código fuente. Publicar únicamente el contenido de esa carpeta.`);
 }

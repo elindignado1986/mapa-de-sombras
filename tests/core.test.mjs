@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {build} from 'esbuild';
+import fs from 'node:fs';
+import {pathToFileURL} from 'node:url';
+fs.mkdirSync('.checks',{recursive:true});
+await build({stdin:{contents:"export * from './src/geometry.js'; export * from './src/share-state.js'; export * from './src/solar.js';",resolveDir:process.cwd()},bundle:true,platform:'node',format:'esm',outfile:'.checks/core.mjs'});
+const {contains,footprintWithin,shadow,areaMulti,encode,decode,solar}=await import(pathToFileURL(process.cwd()+'/.checks/core.mjs'));
+const parcel={type:'Polygon',coordinates:[[[0,0],[10,0],[10,10],[6,10],[6,4],[4,4],[4,10],[0,10],[0,0]]]};
+test('concave containment rejects an edge crossing the courtyard even if vertices are inside',()=>{assert(contains(parcel,[2,8]));assert(!footprintWithin(parcel,[[2,8],[8,8],[5,2]]));assert(footprintWithin(parcel,[[1,1],[3,1],[3,3],[1,3]]));});
+test('holes and self intersections cannot become a building',()=>{const g={type:'Polygon',coordinates:[[[0,0],[10,0],[10,10],[0,10],[0,0]],[[4,4],[4,6],[6,6],[6,4],[4,4]]]};assert(!contains(g,[5,5]));assert(!footprintWithin(g,[[3,3],[7,3],[7,7],[3,7]]));assert(!footprintWithin(g,[[1,1],[3,3],[1,3],[3,1]]));});
+test('solar clock uses coordinates and UTC-3, shadow opposite sun, no night shadow',()=>{const s=solar('2026-06-21',960,-34.592113,-58.590636,30);assert(Math.abs(s.length-96)<2);assert(s.east<0&&s.north>0);assert.notEqual(solar('2026-06-21',960,-34.65,-58.65).az,s.az);assert.deepEqual(shadow(parcel,24,{east:1,north:0,up:-1}),[]);});
+test('concavity survives overhead shadow and rectangle sweep has analytic area',()=>{assert.equal(areaMulti(shadow(parcel,10,{east:0,north:0,up:1})),88);const g={type:'Polygon',coordinates:[[[0,0],[10,0],[10,10],[0,10],[0,0]]]};assert.equal(areaMulti(shadow(g,10,{east:1,north:0,up:1})),200);});
+const state={schemaVersion:1,municipality:'moron',parcel:{id:'test',geometry:{type:'Polygon',coordinates:[[[-58.65,-34.65],[-58.649,-34.65],[-58.649,-34.649],[-58.65,-34.649],[-58.65,-34.65]]]}},datasetVersion:'test',footprint:null,height:24,heightMode:'floors',heightInput:8,date:'2026-06-21',minutes:960,camera:{yaw:-.35,pitch:.85,zoom:2.8,panX:0,panY:0,flat:false}};
+test('versioned compressed URL restores every state value',()=>{assert.deepEqual(decode(encode(state)),state);assert(encode(state).length<JSON.stringify(state).length*1.34);});
+test('corrupted, impossible date, invalid height and unsupported schema are rejected',()=>{for(const s of [{...state,schemaVersion:2},{...state,height:-1},{...state,date:'2026-02-30'},{...state,heightInput:7}])assert.throws(()=>encode(s));assert.throws(()=>decode('#v1=broken'));});

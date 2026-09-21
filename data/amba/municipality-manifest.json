@@ -1,0 +1,199 @@
+{
+  "almirante-brown": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "avellaneda": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "berazategui": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "berisso": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "brandsen": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "campana": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "canuelas": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "ensenada": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "escobar": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "esteban-echeverria": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "exaltacion-de-la-cruz": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "ezeiza": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "florencio-varela": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "general-las-heras": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "general-rodriguez": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "general-san-martin": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "hurlingham": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "ituzaingo": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "jose-c-paz": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "la-matanza": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "la-plata": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "lanus": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "lomas-de-zamora": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "lujan": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "malvinas-argentinas": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "marcos-paz": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "merlo": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "moreno": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "moron": {
+    "source": "ARBA",
+    "sourceURL": "https://geo.arba.gov.ar/datoabierto/datos/101/110101",
+    "downloadedAt": "2026-09-21T17:49:13.439Z",
+    "publishedAt": "13/11/2025",
+    "processedAt": "2026-09-21T17:54:57.232Z",
+    "originalCRS": "PROJCS[\"POSGAR 2007 / Argentina 5\",GEOGCS[\"POSGAR 2007\",DATUM[\"Posiciones_Geodesicas_Argentinas_2007\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],TOWGS84[0,0,0,0,0,0,0],AUTHORITY[\"EPSG\",\"1062\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"5340\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",-60],PARAMETER[\"scale_factor\",1],PARAMETER[\"false_easting\",5500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AUTHORITY[\"EPSG\",\"5347\"]]",
+    "encoding": "UTF-8",
+    "version": "2026-09-21-11c1d9e88a3b",
+    "parcelCount": 89356,
+    "quarantinedCount": 1,
+    "cellSize": 0.005,
+    "bbox": [
+      -58.667300543024716,
+      -34.70434656653915,
+      -58.55630869721506,
+      -34.57300651875714
+    ],
+    "available": true,
+    "status": "disponible",
+    "redistribution": "pending-review",
+    "tileCount": 270
+  },
+  "pilar": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "presidente-peron": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "quilmes": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "san-fernando": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "san-isidro": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "san-miguel": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "san-vicente": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "tigre": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "tres-de-febrero": {
+    "source": "ARBA",
+    "sourceURL": "https://geo.arba.gov.ar/datoabierto/datos/117/110101",
+    "downloadedAt": "2026-09-21T17:49:10.132Z",
+    "publishedAt": "13/11/2025",
+    "processedAt": "2026-09-21T17:54:08.225Z",
+    "originalCRS": "PROJCS[\"POSGAR 2007 / Argentina 5\",GEOGCS[\"POSGAR 2007\",DATUM[\"Posiciones_Geodesicas_Argentinas_2007\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],TOWGS84[0,0,0,0,0,0,0],AUTHORITY[\"EPSG\",\"1062\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"5340\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",-60],PARAMETER[\"scale_factor\",1],PARAMETER[\"false_easting\",5500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AUTHORITY[\"EPSG\",\"5347\"]]",
+    "encoding": "UTF-8",
+    "version": "2026-09-21-e63c9b7d25d8",
+    "parcelCount": 77651,
+    "cellSize": 0.005,
+    "bbox": [
+      -58.69396472103592,
+      -34.6541701067348,
+      -58.5235870814702,
+      -34.49494119885312
+    ],
+    "available": true,
+    "status": "disponible",
+    "redistribution": "pending-review",
+    "tileCount": 248
+  },
+  "vicente-lopez": {
+    "available": false,
+    "status": "sin-datos"
+  },
+  "zarate": {
+    "available": false,
+    "status": "sin-datos"
+  }
+}

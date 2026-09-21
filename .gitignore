@@ -1,2 +1,7 @@
 node_modules/
 publicar/
+.checks/
+urban.bundle.js
+data-source/arba/*/
+data/amba/*/
+test-results/

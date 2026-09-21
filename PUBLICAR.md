@@ -1,5 +1,7 @@
 # Versión para publicar
 
+> Actualización AMBA: consultar primero [README.md](README.md) y [docs/ARBA-DATA.md](docs/ARBA-DATA.md). Ahora también intervienen `src/`, `config/`, `data/` y el bundle generado. Servir por HTTP, no abrir `index.html` como archivo. Los datasets no viajan por Git; prepararlos antes de publicar. La revisión de redistribución ARBA sigue pendiente y el build de Vercel la exige. Las indicaciones siguientes describen la publicación original de Ciudad Jardín.
+
 Los archivos `index.html`, `app.js`, `sound.js`, `sound-view.js`, `parcels.js`, `parcel-geometry.js` y `style.css` siguen siendo los originales editables. Se puede abrir el sitio local como antes.
 
 La carpeta **publicar** contiene la versión compactada para subir al alojamiento. Publicar sólo su contenido, no toda la carpeta del proyecto. El ZIP `mapa-de-sombras-publicar.zip` preparado por Codex contiene únicamente esos archivos, con el `index.html` en la raíz.

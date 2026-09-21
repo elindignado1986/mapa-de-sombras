@@ -1,5 +1,7 @@
 MAPA DE SOMBRAS — CIUDAD JARDÍN
 
+ACTUALIZACIÓN AMBA: ver README.md. Ejecutar npm ci y npm run dev; abrir http://localhost:4173. El texto siguiente documenta la versión original, recuperable en la rama backup/antes-amba-20260921.
+
 Abrí index.html para usar la simulación sin instalación. Abrí esta carpeta en Visual Studio Code para editarla.
 
 Las vistas Lotes y Calles usan las imágenes originales aportadas. El volumen sigue aproximadamente los dos lotes indicados y ocupa toda su superficie como supuesto. Altura: 30 metros. Faltan retiros y planta de implantación.
