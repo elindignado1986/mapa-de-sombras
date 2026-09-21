@@ -1,0 +1,16 @@
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
+const municipalities=require('../config/ambaMunicipalities.json');
+const manifest=JSON.parse(fs.readFileSync('data/amba/municipality-manifest.json','utf8'));
+const endpoint='https://overpass-api.de/api/interpreter';
+(async()=>{for(const id of process.argv.slice(2)){
+ if(!municipalities.some(m=>m.id===id)||!manifest[id]?.bbox)throw Error('Municipio sin límites verificados');
+ const [west,south,east,north]=manifest[id].bbox,bbox=[south-.005,west-.005,north+.005,east+.005].join(',');
+ const query=`[out:json][timeout:90];(way[highway][name](${bbox});way[railway=rail](${bbox});way[waterway][name](${bbox});way[leisure=park][name](${bbox});node[railway=station][name](${bbox});node[place~"suburb|neighbourhood|quarter"][name](${bbox}););out geom;`;
+ const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','User-Agent':'MapaDeSombras/1.0 (local municipal map preparation)'},body:new URLSearchParams({data:query}),signal:AbortSignal.timeout(120000)});
+ if(!response.ok)throw Error(`Overpass HTTP ${response.status}: reintentar más tarde`);
+ const data=await response.json();if(data.remark)throw Error(data.remark);
+ const features=data.elements.map(e=>{const t=e.tags||{},points=e.geometry?.filter(p=>Number.isFinite(p.lon)&&Number.isFinite(p.lat)).map(p=>[p.lon,p.lat]),kind=t.highway?'road':t.waterway?'water':t.leisure==='park'?'park':t.railway==='rail'?'rail':t.railway==='station'?'station':'place';return {type:'Feature',id:`${e.type}/${e.id}`,properties:{name:t.name||'',kind,roadClass:t.highway||''},geometry:e.type==='node'?{type:'Point',coordinates:[e.lon,e.lat]}:{type:kind==='park'?'Polygon':'LineString',coordinates:kind==='park'?[points]:points}};}).filter(f=>f.geometry.type==='Point'||f.geometry.coordinates?.length);
+ const size=.02,cells=new Map();for(const f of features){const coords=f.geometry.type==='Point'?[f.geometry.coordinates]:f.geometry.type==='Polygon'?f.geometry.coordinates[0]:f.geometry.coordinates;const b=coords.reduce((b,p)=>[Math.min(b[0],p[0]),Math.min(b[1],p[1]),Math.max(b[2],p[0]),Math.max(b[3],p[1])],[Infinity,Infinity,-Infinity,-Infinity]);for(let x=Math.floor(b[0]/size);x<=Math.floor(b[2]/size);x++)for(let y=Math.floor(b[1]/size);y<=Math.floor(b[3]/size);y++){const key=`${x}_${y}`;if(!cells.has(key))cells.set(key,[]);cells.get(key).push(f);}}
+ const dir=path.join('data/context',id);fs.mkdirSync(dir,{recursive:true});for(const [key,features]of cells)fs.writeFileSync(path.join(dir,key+'.json'),JSON.stringify({type:'FeatureCollection',features}));
+ const file='data/context/manifest.json',index=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,'utf8')):{};index[id]={source:'OpenStreetMap contributors',license:'ODbL-1.0',attribution:'https://www.openstreetmap.org/copyright',downloadedAt:new Date().toISOString(),sourceDate:data.osm3s?.timestamp_osm_base,version:crypto.createHash('sha256').update(JSON.stringify(features)).digest('hex').slice(0,12),featureCount:features.length,cellSize:size,cells:[...cells.keys()]};fs.writeFileSync(file,JSON.stringify(index,null,2));console.log(id,features.length,'referencias',cells.size,'celdas');
+}})().catch(e=>{console.error(e.message);process.exitCode=1});
