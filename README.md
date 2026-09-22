@@ -1,6 +1,6 @@
 # Mapa de sombras · AMBA
 
-Simulador comunitario de asoleamiento con 77.651 parcelas de Tres de Febrero. Es el único municipio habilitado; Morón y los demás figuran deshabilitados.
+Simulador comunitario de asoleamiento con 77.651 parcelas de Tres de Febrero. También está habilitado Hurlingham, con 44.162 parcelas; Morón y los demás figuran deshabilitados.
 
 ## Ejecutar
 
@@ -49,8 +49,10 @@ El contador/votación requiere Redis REST opcional y variables `COMMUNITY_REDIS_
 
 ## Alcance y pendientes de validación
 
-El piloto muestra catastro y contexto de calles de Tres de Febrero. Photon es un proveedor desacoplado de búsqueda basado en OSM, de disponibilidad limitada; requiere dimensionamiento antes de difusión masiva. No se simula normativa, mensura ni edificabilidad. Sombras sobre plano horizontal, sin terreno ni obstrucciones vecinas.
+El piloto muestra catastro y contexto de calles de Tres de Febrero y Hurlingham. Photon es un proveedor desacoplado de búsqueda basado en OSM, de disponibilidad limitada; requiere dimensionamiento antes de difusión masiva. No se simula normativa, mensura ni edificabilidad. Sombras sobre plano horizontal, sin terreno ni obstrucciones vecinas.
 
-La prueba mobile es emulada, no una certificación en iPhone/Android físicos. Falta revisión geográfica independiente contra mensuras y autorización de redistribución. Dos municipios fueron procesados; sólo Tres de Febrero está habilitado por ahora.
+La prueba mobile es emulada, no una certificación en iPhone/Android físicos. Falta revisión geográfica independiente contra mensuras y autorización de redistribución. Tres municipios fueron procesados; Tres de Febrero y Hurlingham están habilitados.
 
 Documentación: [Arquitectura](docs/ARCHITECTURE.md) · [Datos ARBA](docs/ARBA-DATA.md) · [Compartir](docs/SHARING.md).
+
+[Datos y validación de Hurlingham](docs/HURLINGHAM.md).

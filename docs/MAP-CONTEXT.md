@@ -1,6 +1,6 @@
 # Contexto cartográfico
 
-Tres de Febrero es el único municipio habilitado. El mapa inicial encuadra el límite oficial de ARBA. Las parcelas y el contexto se conservan al pasar a perspectiva de 32 mm.
+Tres de Febrero y Hurlingham están habilitados. El mapa inicial encuadra el límite oficial de ARBA del municipio elegido. Las parcelas y el contexto se conservan al pasar a perspectiva de 32 mm.
 
 `scripts/fetch-map-context.cjs tres-de-febrero` descarga calles con nombre, ferrocarriles, cursos de agua, parques, estaciones y lugares de OpenStreetMap mediante Overpass. Produce celdas de 0,02 grados y un resumen para escalas lejanas en `data/context/`. El manifest registra fecha, versión, fuente y licencia. La app sirve esos archivos propios; no consulta Overpass durante el uso.
 
