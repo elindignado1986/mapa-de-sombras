@@ -25,7 +25,7 @@ El archivo de Morón del 13/11/2025 contiene un registro fuera del AMBA. Tras re
 
 ## Uso
 
-La app inicia en planta mostrando todo Tres de Febrero. Buscar una dirección muestra un punto rojo; las coincidencias aproximadas se identifican. Seleccionar una o varias parcelas que compartan un lado (hasta 16), indicar pisos —unidad inicial, 3 m por piso— o metros y generar el volumen directamente. No hay dibujo libre.
+La app inicia en planta mostrando todo Tres de Febrero. Buscar una dirección muestra un punto rojo; las coincidencias aproximadas se identifican. Seleccionar una o varias parcelas que compartan un lado (hasta 16), indicar pisos —unidad inicial, 3,375 m por piso (8 pisos = 27 m)— o metros y generar el volumen directamente. No hay dibujo libre.
 
 La vista 3D se habilita al generar el volumen, con perspectiva equivalente a 32 mm y giro centrado en la construcción. En planta, arrastrar desplaza; en 3D, arrastrar gira. Los enlaces compartidos también abren en planta. Guardado local disponible desde el pie.
 
