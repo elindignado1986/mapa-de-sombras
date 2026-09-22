@@ -6,7 +6,7 @@
     "build": "node scripts/build.cjs",
     "dev": "node scripts/build.cjs && node scripts/serve.cjs publicar",
     "test": "node --test tests/*.test.mjs",
-    "test:browser": "node scripts/check-app.cjs",
+    "test:browser": "node scripts/check-revision.cjs",
     "data:fetch": "node scripts/fetch-arba.cjs",
     "data:build": "node scripts/build-map-data.mjs"
   },

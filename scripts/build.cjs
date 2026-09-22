@@ -21,7 +21,7 @@ async function build(){
 }
   const output=path.join(root,'publicar');
   const read=name=>fs.readFileSync(path.join(root,name),'utf8');
-  const urban=await esbuild.build({entryPoints:[path.join(root,'src/main.js')],bundle:true,write:false,minify:true,format:'iife',target:'es2022'});
+  const urban=await esbuild.build({entryPoints:[path.join(root,'src/main.js')],bundle:true,write:false,minify:true,format:'iife',target:'es2022',define:{__GOOGLE_MAPS_API_KEY__:JSON.stringify(process.env.GOOGLE_MAPS_API_KEY||'')}});
   fs.writeFileSync(path.join(root,'urban.bundle.js'),urban.outputFiles[0].contents);
   const hash=text=>crypto.createHash('sha256').update(text).digest('hex').slice(0,12);
   const scripts=['parcels.js','parcel-geometry.js','sound.js','sound-view.js','app.js'];
@@ -37,7 +37,7 @@ async function build(){
   const jsName=`app.${hash(js.code)}.min.js`,cssName=`style.${hash(css.code)}.min.css`;
   for(const tag of tags)html=html.replace(tag[0],'');
   html=html.replace('href="style.css"',`href="${cssName}"`).replace('</body>',`<script src="${jsName}"></script></body>`);
-  const assets=['catastro-original2.png','mapa-original2.png'];
+  const assets=['catastro-original2.png','mapa-original2.png','logo.png','cafecito-button.png'];
   const files=new Map([['index.html',Buffer.from(html)],[jsName,Buffer.from(js.code)],[cssName,Buffer.from(css.code)],['.nojekyll',Buffer.alloc(0)],...assets.map(name=>[name,fs.readFileSync(path.join(root,name))])]);
   // Only this fixed, non-symlink output folder may be cleaned. Never modify editable sources.
   if(!output.startsWith(root+path.sep)||path.basename(output)!=='publicar')throw Error('Carpeta de salida inválida.');

@@ -15,7 +15,7 @@ La referencia publicada y la copia local se ejecutaron antes de modificar: sin e
 - `src/geometry.js`: Polygon/MultiPolygon, huecos, contención, clipping, triangulación y unión de sombras.
 - `src/renderer.js`: proyección local este/norte, volumen y sombras; sin rotación geográfica arbitraria.
 - `src/solar.js`: misma aproximación NOAA, coordenadas de la selección, altura variable y reloj civil UTC−3 independiente del dispositivo.
-- `src/main.js` y `src/ui.js`: flujo, dibujo, conexión a los controles existentes. `window.Legacy` es el adaptador explícito; `window.Urban` intercepta únicamente el modo AMBA.
+- `src/main.js` y `src/ui.js`: flujo de selección de parcelas, conexión a los controles existentes. `window.Legacy` es el adaptador explícito; `window.Urban` intercepta únicamente el modo AMBA.
 - `src/geocoder.js`: proveedor Photon reemplazable, búsqueda explícita, sin autocompletar. La falta de resultados no impide explorar.
 - `src/local-projects.js`, `src/share-state.js`: privacidad local y enlaces versionados.
 - `api/community.js`: contadores anónimos opcionales en Redis REST, sin guardar geometrías, direcciones ni IP. Rate limit global por evento/minuto y origen autorizado; el voto tiene además freno local. Esto mitiga abuso casual, no garantiza un voto por persona.
@@ -26,7 +26,7 @@ Se eligieron celdas GeoJSON de 0,005° por municipio, equivalentes funcionalment
 
 Es una solución para el piloto. PMTiles no se incorporó por preferencia personal: requiere lector y decodificador adicionales y complicaría la selección del polígono completo al atravesar teselas. Medir tamaños/carga antes de extender a los otros 38 municipios; un índice jerárquico o PMTiles es una evolución posible. No se descargaron los 40.
 
-El mapa base AMBA actual es el propio parcelario, sin cartografía de calles externa. La referencia Wernicke conserva sus mapas raster originales. No se mezclan imágenes calibradas a mano con parcelas oficiales.
+El mapa base combina el parcelario ARBA con calles y referencias de OpenStreetMap servidas localmente por `src/map-context.js`. El límite oficial encuadra el inicio. `src/camera.js` implementa la perspectiva de 32 mm y su inversa sobre el suelo; `src/parcel-selection.js` valida contigüidad por lado y une las parcelas. La interfaz ya no expone el estudio original ni el dibujo libre.
 
 ## Precisión y límites
 
@@ -36,7 +36,7 @@ El reloj usa UTC−3, vigente para Buenos Aires en el horizonte de simulación; 
 
 ## Publicación y servicios opcionales
 
-Vercel sirve `publicar/`; `/embed/` reescribe a `index.html`. No se publicó ni se cambiaron servicios remotos. Revisar redistribución ARBA antes del deploy. El build en Vercel impide publicar mientras la revisión siga pendiente; después de documentarla, configurar `ARBA_REDISTRIBUTION_REVIEWED=1`. Los datos derivados no contienen los atributos tributarios del Shape.
+Vercel sirve `publicar/`; `/embed/` reescribe a `index.html`. No se publicó ni se cambiaron servicios remotos. Revisar redistribución ARBA antes del deploy. El build emite una advertencia si la revisión sigue pendiente. Los datos derivados no contienen los atributos tributarios del Shape.
 
 Configurar `COMMUNITY_REDIS_URL`, `COMMUNITY_REDIS_TOKEN` y `COMMUNITY_ORIGIN` para activar contadores/votaciones. Sin credenciales no hay conteos ficticios. `SUPPORT_URL`, `ADS_ENABLED`, `AD_PROVIDER` y `AD_SLOTS` están en configuración. Publicidad y apoyo no bloquean funciones.
 

@@ -13,3 +13,5 @@ Se valida versión, tamaño, geometría, altura, fecha real, reloj y cámara ant
 `/embed/#v1=...` usa la misma escena y reloj, interfaz reducida y enlace a versión completa. El generador entrega iframe de ancho 100% y 650 px de alto. Vercel permite `frame-ancestors *` para embed; no agrega X-Frame-Options. El host del iframe puede necesitar permitir este origen en su propia CSP.
 
 El hash es público para quien recibe el enlace: compresión no es cifrado. Analítica comunitaria, si se habilita, sólo transmite un nombre de evento o municipio votado. No transmite la URL ni sus coordenadas.
+
+La selección múltiple añade `parcels` al esquema v1: hasta 16 geometrías de origen contiguas. Se valida su conectividad y unión. Los enlaces anteriores siguen siendo compatibles. Toda restauración abre en planta; el volumen restaurado permite luego activar 3D.

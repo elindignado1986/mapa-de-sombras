@@ -1,6 +1,6 @@
 # Mapa de sombras · AMBA
 
-Evolución del estudio de Ciudad Jardín, conservando Canvas, cámara, reloj solar, estética y el estudio original. Piloto con **77.651 parcelas de Tres de Febrero** y **89.356 de Morón**. Los otros 38 municipios figuran sin datos; no se simula disponibilidad ficticia.
+Simulador comunitario de asoleamiento con 77.651 parcelas de Tres de Febrero. Es el único municipio habilitado; Morón y los demás figuran deshabilitados.
 
 ## Ejecutar
 
@@ -13,7 +13,7 @@ npm run dev
 
 Abrir `http://localhost:4173`. `npm run dev` construye y sirve la aplicación. Reejecutar el build después de editar módulos. No abrir con `file://`: los datos se cargan por HTTP.
 
-Los datos descargados ya están preparados en este workspace. En un clon nuevo, los crudos/celdas no vienen en Git: seguir [ARBA-DATA](docs/ARBA-DATA.md) para generar los dos pilotos o importar manualmente. Sin esos datos sigue disponible «Estudio Wernicke». No se requiere ARBA al usar la app después de procesar los archivos.
+Los datos descargados ya están preparados en este workspace. En un clon nuevo, los crudos/celdas no vienen en Git: seguir [ARBA-DATA](docs/ARBA-DATA.md) para generar los dos pilotos o importar manualmente. Sin esos datos no se pueden seleccionar parcelas. No se requiere ARBA al usar la app después de procesar los archivos.
 
 ```sh
 npm run data:fetch -- tres-de-febrero moron
@@ -25,9 +25,11 @@ El archivo de Morón del 13/11/2025 contiene un registro fuera del AMBA. Tras re
 
 ## Uso
 
-Elegir municipio, buscar una dirección o tocar una parcela. Usar toda la parcela o dibujar dentro de ella, indicar metros/pisos y generar. Mover fecha/hora; guardar localmente o compartir mediante enlace, WhatsApp, Web Share, QR o iframe. «Estudio Wernicke» conserva el escenario original y el modo sonoro.
+La app inicia en planta mostrando todo Tres de Febrero. Buscar una dirección muestra un punto rojo; las coincidencias aproximadas se identifican. Seleccionar una o varias parcelas que compartan un lado (hasta 16), indicar pisos —unidad inicial, 3 m por piso— o metros y generar el volumen directamente. No hay dibujo libre.
 
-En planta: arrastrar desplaza. En 3D: arrastrar gira; dos dedos desplazan/acercan. Flechas y +/− ofrecen controles de teclado. Dibujo: taps/clicks agregan puntos; arrastrar un vértice lo mueve; deshacer/reiniciar/cerrar validan la huella completa.
+La vista 3D se habilita al generar el volumen, con perspectiva equivalente a 32 mm y giro centrado en la construcción. En planta, arrastrar desplaza; en 3D, arrastrar gira. Los enlaces compartidos también abren en planta. Guardado local disponible desde el pie.
+
+Calles, estaciones y parques de OpenStreetMap acompañan el catastro ARBA en ambas vistas. Google Híbrido queda visible como opción deshabilitada para una integración futura; todavía no está conectado. Ver [Contexto cartográfico](docs/MAP-CONTEXT.md).
 
 ## Verificar
 
@@ -37,18 +39,18 @@ npm run build
 npm run test:browser
 ```
 
-La prueba de navegador requiere servidor activo en 4173 y Chrome; configurar `CHROME_PATH` en otros sistemas. Prueba desktop, mobile emulado, almacenamiento, enlaces, QR, embed, municipios y regresión del estudio original. Capturas y resultados quedan en `.checks/`.
+La prueba de navegador requiere servidor activo en 4173 y Chrome; configurar `CHROME_PATH` en otros sistemas. Prueba escritorio y móvil emulado: inicio general, parcelas contiguas, marcador, altura, perspectiva, enlaces y controles deshabilitados. Capturas y resultados quedan en `.checks/`.
 
 ## Publicación
 
-`npm run build` genera `publicar/`; Vercel está configurado en `vercel.json`. **No se hizo deploy. Antes de publicar datos derivados, revisar las condiciones de redistribución ARBA**, todavía no documentadas de forma inequívoca. El build de Vercel verifica esta revisión: una vez documentada, configurar `ARBA_REDISTRIBUTION_REVIEWED=1`. Preparar/subir los datos al hosting propio como parte del despliegue; los directorios ignorados no viajan con Git. Los crudos y la información tributaria no se incorporan al frontend.
+`npm run build` genera `publicar/`; Vercel está configurado en `vercel.json`. **No se hizo deploy. Antes de publicar datos derivados, revisar las condiciones de redistribución ARBA**, todavía no documentadas de forma inequívoca. El build muestra una advertencia si esa revisión sigue pendiente. Preparar/subir los datos al hosting propio como parte del despliegue; los directorios ignorados no viajan con Git. Los crudos y la información tributaria no se incorporan al frontend.
 
-El contador/votación requiere Redis REST opcional y variables `COMMUNITY_REDIS_URL`, `COMMUNITY_REDIS_TOKEN`, `COMMUNITY_ORIGIN`. Sin ellas la aplicación funciona sin contadores ficticios. Configuración de apoyo/publicidad en `config/app.js`, desactivados inicialmente.
+El contador/votación requiere Redis REST opcional y variables `COMMUNITY_REDIS_URL`, `COMMUNITY_REDIS_TOKEN`, `COMMUNITY_ORIGIN`. Sin ellas la aplicación funciona sin contadores ficticios. El enlace de apoyo a Cafecito está en la cabecera; la publicidad permanece desactivada.
 
 ## Alcance y pendientes de validación
 
-El piloto muestra cartografía parcelaria propia; aún no ofrece una capa de calles general del AMBA. Photon es un proveedor desacoplado de búsqueda basado en OSM, de disponibilidad limitada; requiere dimensionamiento antes de difusión masiva. No se simula normativa, mensura ni edificabilidad. Sombras sobre plano horizontal, sin terreno ni obstrucciones vecinas.
+El piloto muestra catastro y contexto de calles de Tres de Febrero. Photon es un proveedor desacoplado de búsqueda basado en OSM, de disponibilidad limitada; requiere dimensionamiento antes de difusión masiva. No se simula normativa, mensura ni edificabilidad. Sombras sobre plano horizontal, sin terreno ni obstrucciones vecinas.
 
-La prueba mobile es emulada, no una certificación en iPhone/Android físicos. Falta revisión geográfica independiente contra mensuras y autorización de redistribución. Sólo dos municipios fueron procesados; Hurlingham se prueba como estado sin datos.
+La prueba mobile es emulada, no una certificación en iPhone/Android físicos. Falta revisión geográfica independiente contra mensuras y autorización de redistribución. Dos municipios fueron procesados; sólo Tres de Febrero está habilitado por ahora.
 
 Documentación: [Arquitectura](docs/ARCHITECTURE.md) · [Datos ARBA](docs/ARBA-DATA.md) · [Compartir](docs/SHARING.md).
