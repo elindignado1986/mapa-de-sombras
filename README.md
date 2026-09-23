@@ -1,6 +1,6 @@
 # Mapa de sombras · AMBA
 
-Simulador comunitario de asoleamiento con 77.651 parcelas de Tres de Febrero. También está habilitado Hurlingham, con 44.162 parcelas; Morón y los demás figuran deshabilitados.
+Simulador comunitario de asoleamiento con 77.651 parcelas de Tres de Febrero. También está habilitado Hurlingham, con 44.162 parcelas; Castelar se ofrece como localidad dentro de Morón; el resto de Morón y los demás municipios permanecen deshabilitados.
 
 ## Ejecutar
 
@@ -56,3 +56,5 @@ La prueba mobile es emulada, no una certificación en iPhone/Android físicos. F
 Documentación: [Arquitectura](docs/ARCHITECTURE.md) · [Datos ARBA](docs/ARBA-DATA.md) · [Compartir](docs/SHARING.md).
 
 [Datos y validación de Hurlingham](docs/HURLINGHAM.md).
+
+[Datos, límite y validación de Castelar](docs/CASTELAR.md).

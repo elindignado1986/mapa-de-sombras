@@ -1,7 +1,7 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const municipalities=require('../config/ambaMunicipalities.json');
 const manifest=JSON.parse(fs.readFileSync('data/amba/municipality-manifest.json','utf8'));
-const endpoint='https://overpass-api.de/api/interpreter';
+const endpoint=process.env.OVERPASS_URL||'https://overpass-api.de/api/interpreter';
 (async()=>{for(const id of process.argv.slice(2)){
  if(!municipalities.some(m=>m.id===id)||!manifest[id]?.bbox)throw Error('Municipio sin límites verificados');
  const [west,south,east,north]=manifest[id].bbox,bbox=[south-.005,west-.005,north+.005,east+.005].join(',');
