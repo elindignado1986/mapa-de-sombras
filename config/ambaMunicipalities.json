@@ -149,7 +149,12 @@
   },
   {
     "id": "san-isidro",
-    "name": "San Isidro"
+    "name": "San Isidro",
+    "arbaCode": 97,
+    "center": [
+      -58.53992932218437,
+      -34.488501044852015
+    ]
   },
   {
     "id": "san-miguel",

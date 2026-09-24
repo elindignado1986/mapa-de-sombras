@@ -58,3 +58,5 @@ Documentación: [Arquitectura](docs/ARCHITECTURE.md) · [Datos ARBA](docs/ARBA-D
 [Datos y validación de Hurlingham](docs/HURLINGHAM.md).
 
 [Datos, límite y validación de Castelar](docs/CASTELAR.md).
+
+San Isidro: 69.271 parcelas ARBA habilitadas. Ver [datos y validacion](docs/SAN-ISIDRO.md).

@@ -170,8 +170,27 @@
     "status": "sin-datos"
   },
   "san-isidro": {
-    "available": false,
-    "status": "sin-datos"
+    "source": "ARBA",
+    "sourceURL": "https://geo.arba.gov.ar/datoabierto/datos/97/110101",
+    "downloadedAt": "2026-09-24T01:03:13.332Z",
+    "publishedAt": "13/11/2025",
+    "processedAt": "2026-09-24T01:03:24.441Z",
+    "originalCRS": "PROJCS[\"POSGAR 2007 / Argentina 5\",GEOGCS[\"POSGAR 2007\",DATUM[\"Posiciones_Geodesicas_Argentinas_2007\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],TOWGS84[0,0,0,0,0,0,0],AUTHORITY[\"EPSG\",\"1062\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"5340\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",-60],PARAMETER[\"scale_factor\",1],PARAMETER[\"false_easting\",5500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AUTHORITY[\"EPSG\",\"5347\"]]",
+    "encoding": "UTF-8",
+    "version": "2026-09-24-1bab309baec3",
+    "parcelCount": 69271,
+    "quarantinedCount": 0,
+    "cellSize": 0.005,
+    "bbox": [
+      -58.59992743675906,
+      -34.53007453292549,
+      -58.47993120760968,
+      -34.44692755677854
+    ],
+    "available": true,
+    "status": "disponible",
+    "redistribution": "pending-review",
+    "tileCount": 247
   },
   "san-miguel": {
     "available": false,
