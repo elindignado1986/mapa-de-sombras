@@ -70,7 +70,12 @@
   },
   {
     "id": "ituzaingo",
-    "name": "Ituzaingó"
+    "name": "Ituzaingó",
+    "arbaCode": 136,
+    "center": [
+      -58.681144578236356,
+      -34.63994423185548
+    ]
   },
   {
     "id": "jose-c-paz",
